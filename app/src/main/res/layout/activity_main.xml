@@ -9,19 +9,35 @@
 
 
 	<TextView
-		android:id="@+id/exampleTextView"
+		android:id="@+id/exampleTextView2"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="8dp"
 		android:layout_marginEnd="8dp"
 		android:layout_marginLeft="8dp"
 		android:layout_marginRight="8dp"
 		android:layout_marginStart="8dp"
-		android:layout_marginTop="8dp"
 		android:gravity="center"
-		android:text="TextView"
+		android:textSize="14sp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"/>
+		app:layout_constraintTop_toBottomOf="@+id/exampleTextView"
+		tools:text="TextView"/>
+
+
+	<TextView
+		android:id="@+id/exampleTextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="8dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginStart="8dp"
+		android:gravity="center"
+		app:layout_constraintBottom_toTopOf="@+id/exampleTextView2"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_chainStyle="spread"
+		tools:text="TextView"/>
 </android.support.constraint.ConstraintLayout>
