@@ -1,12 +1,17 @@
 package io.supernova.toolkit.example;
 
+import android.graphics.Color;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.view.View;
 import android.widget.TextView;
 
 import io.supernova.supernovauitoolkit.R;
+import io.supernova.uitoolkit.drawable.GradientStop;
+import io.supernova.uitoolkit.drawable.LinearGradientDrawable;
 import io.supernova.uitoolkit.text.LetterSpacingSpan;
 import io.supernova.uitoolkit.text.LineHeightSpan;
 import io.supernova.uitoolkit.text.RelativeLineHeightSpan;
@@ -16,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
 	private TextView exampleTextView;
 	private TextView exampleTextView2;
+
+	private View gradientView;
 
 
 	@Override
@@ -30,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
 	private void init() {
 		this.exampleTextView = findViewById(R.id.exampleTextView);
 		this.exampleTextView2 = findViewById(R.id.exampleTextView2);
+		this.gradientView = findViewById(R.id.gradientView);
 
 		this.setupLineSpacingExample();
 		this.setupLetterSpacingExample();
+		this.setupGradient();
 	}
 
 	private void setupLineSpacingExample() {
@@ -65,5 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 		// Pass spannable text to the view
 		this.exampleTextView2.setText(spannableString);
+	}
+
+	private void setupGradient() {
+		this.gradientView.setBackground(new LinearGradientDrawable(new PointF(0, 0), new PointF(1, 1), new GradientStop(0, Color.BLUE),
+				new GradientStop(0.3f, Color.BLACK), new GradientStop(0.6f, Color.WHITE), new GradientStop(1, Color.RED)));
 	}
 }
