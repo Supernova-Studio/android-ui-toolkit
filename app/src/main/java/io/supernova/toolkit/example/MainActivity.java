@@ -2,6 +2,7 @@ package io.supernova.toolkit.example;
 
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -96,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
 
 		// Set gradient corner radius in DPs
 		linearGradientDrawable.setCornerRadius(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, this.getResources().getDisplayMetrics()));
+
+		// Set gradient stroke
+		linearGradientDrawable.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, this.getResources().getDisplayMetrics()));
+		linearGradientDrawable.setStrokeColor(Color.BLACK);
 
 		// Pass gradient to the view
 		this.gradientView.setBackground(linearGradientDrawable);

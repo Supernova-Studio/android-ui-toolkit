@@ -21,7 +21,6 @@ import android.support.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -38,7 +37,8 @@ public class LinearGradientDrawable extends Drawable {
 
 	private final RectF reusableRect = new RectF(0, 0, 0, 0);
 
-	private final Paint gradientPaint = new Paint();
+	private final Paint gradientPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private final Paint strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 
 	public LinearGradientDrawable(@NonNull PointF start, @NonNull PointF end, Collection<GradientStop> stops) {
@@ -46,6 +46,8 @@ public class LinearGradientDrawable extends Drawable {
 		this.end = end;
 
 		this.stops.addAll(stops);
+
+		this.init();
 	}
 
 
@@ -54,6 +56,8 @@ public class LinearGradientDrawable extends Drawable {
 		this.end = end;
 
 		this.stops.addAll(Arrays.asList(stops));
+
+		this.init();
 	}
 
 
@@ -66,7 +70,13 @@ public class LinearGradientDrawable extends Drawable {
 
 	@Override
 	public void draw(@NonNull Canvas canvas) {
-		canvas.drawRoundRect(this.getFloatReusableBounds(), this.cornerRadius, this.cornerRadius, this.gradientPaint);
+
+		RectF floatBounds = this.getFloatReusableBounds();
+		canvas.drawRoundRect(floatBounds, this.cornerRadius, this.cornerRadius, this.gradientPaint);
+
+		if (this.hasStroke()) {
+			canvas.drawRoundRect(floatBounds, this.cornerRadius, this.cornerRadius, this.strokePaint);
+		}
 	}
 
 
@@ -113,6 +123,21 @@ public class LinearGradientDrawable extends Drawable {
 
 	public void setCornerRadius(float cornerRadius) {
 		this.cornerRadius = cornerRadius;
+	}
+
+
+	public void setStrokeWidth(float width) {
+		this.strokePaint.setStrokeWidth(width);
+	}
+
+
+	public void setStrokeColor(@ColorInt int color) {
+		this.strokePaint.setColor(color);
+	}
+
+
+	private void init() {
+		this.strokePaint.setStyle(Paint.Style.STROKE);
 	}
 
 
@@ -177,5 +202,10 @@ public class LinearGradientDrawable extends Drawable {
 		this.reusableRect.top = bounds.top;
 
 		return this.reusableRect;
+	}
+
+
+	private boolean hasStroke() {
+		return this.strokePaint.getStrokeWidth() != 0;
 	}
 }
