@@ -28,7 +28,6 @@ public class LinearGradientDrawable extends Drawable {
 
 	@NonNull
 	private final PointF start;
-
 	@NonNull
 	private final PointF end;
 
