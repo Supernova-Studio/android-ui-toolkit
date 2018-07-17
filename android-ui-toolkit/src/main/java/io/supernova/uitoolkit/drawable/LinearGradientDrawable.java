@@ -83,6 +83,7 @@ public class LinearGradientDrawable extends Drawable {
 	@Override
 	public void setAlpha(int alpha) {
 		this.gradientPaint.setAlpha(alpha);
+		this.strokePaint.setAlpha(alpha);
 	}
 
 
