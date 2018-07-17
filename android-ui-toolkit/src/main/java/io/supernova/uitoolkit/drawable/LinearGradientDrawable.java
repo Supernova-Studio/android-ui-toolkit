@@ -89,7 +89,8 @@ public class LinearGradientDrawable extends Drawable {
 
 	@Override
 	public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
+		this.gradientPaint.setColorFilter(colorFilter);
+		this.strokePaint.setColorFilter(colorFilter);
 	}
 
 
