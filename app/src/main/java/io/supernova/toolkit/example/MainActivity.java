@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 		this.setupGradient();
 	}
 
+
 	private void setupLineSpacingExample() {
 
 		SpannableString spannableString = new SpannableString("Example String\nShowcasing line spacing span\nIt's awesome, trust me");
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 		// Pass spannable text to the view
 		this.exampleTextView.setText(spannableString);
 	}
+
 
 	private void setupLetterSpacingExample() {
 
@@ -76,8 +79,25 @@ public class MainActivity extends AppCompatActivity {
 		this.exampleTextView2.setText(spannableString);
 	}
 
+
 	private void setupGradient() {
-		this.gradientView.setBackground(new LinearGradientDrawable(new PointF(0, 0), new PointF(1, 1), new GradientStop(0, Color.BLUE),
-				new GradientStop(0.3f, Color.BLACK), new GradientStop(0.6f, Color.WHITE), new GradientStop(1, Color.RED)));
+
+		// Create GradientStop array defining colors their position
+		// GradientStop position must be between 0 and 1
+		GradientStop[] stops = {
+				new GradientStop(0, Color.BLUE),
+				new GradientStop(0.3f, Color.BLACK),
+				new GradientStop(0.6f, Color.WHITE),
+				new GradientStop(1, Color.RED)
+		};
+
+		// Create LinearGradientDrawable with the stops, define gradient angle with 2 points
+		LinearGradientDrawable linearGradientDrawable = new LinearGradientDrawable(new PointF(0, 0), new PointF(1, 1), stops);
+
+		// Set gradient corner radius in DPs
+		linearGradientDrawable.setCornerRadius(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, this.getResources().getDisplayMetrics()));
+
+		// Pass gradient to the view
+		this.gradientView.setBackground(linearGradientDrawable);
 	}
 }
