@@ -46,7 +46,7 @@ ext {
 	siteUrl = 'https://github.com/Supernova-Studio/android-ui-toolkit'
 	gitUrl = 'https://github.com/Supernova-Studio/android-ui-toolkit.git'
 
-	libraryVersion = '1.0.0'
+	libraryVersion = '1.0.1'
 
 	developerId = 'supernova-studio'
 	developerName = 'Supernova Studio'
