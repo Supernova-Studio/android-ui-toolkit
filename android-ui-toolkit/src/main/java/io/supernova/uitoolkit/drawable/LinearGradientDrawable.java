@@ -1,5 +1,6 @@
 package io.supernova.uitoolkit.drawable;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -14,9 +15,14 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -208,5 +214,104 @@ public class LinearGradientDrawable extends Drawable {
 
 	private boolean hasStroke() {
 		return this.strokePaint.getStrokeWidth() != 0;
+	}
+
+
+	public static class Builder {
+
+		@NonNull
+		private Context context;
+
+		private final PointF start;
+		private final PointF end;
+
+		private final List<GradientStop> stops = new ArrayList<>();
+
+		private float cornerRadius = 0f;
+		private float strokeWidth = 0f;
+		@ColorInt
+		private int strokeColor = Color.TRANSPARENT;
+
+
+		public Builder(@NonNull Context context, @NonNull PointF start, @NonNull PointF end) {
+			this.context = context;
+			this.start = start;
+			this.end = end;
+		}
+
+
+		/*  STOPS  */
+
+		public Builder addStop(GradientStop stop) {
+			this.stops.add(stop);
+			return this;
+		}
+
+		public Builder addStop(float position, @ColorInt int color) {
+			return this.addStop(new GradientStop(position, color));
+		}
+
+		public Builder addStopWithResource(float position, @ColorRes int color) {
+			return this.addStop(new GradientStop(position, ContextCompat.getColor(context, color)));
+		}
+
+
+		/*  RAW VALUES  */
+
+		public Builder cornerRadiusPx(@Dimension float cornerRadius) {
+			this.cornerRadius = cornerRadius;
+			return this;
+		}
+
+		public Builder strokeWidthPx(@Dimension float width) {
+			this.strokeWidth = width;
+			return this;
+		}
+
+		public Builder cornerRadiusDp(@Dimension float radius) {
+			this.cornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, this.context.getResources().getDisplayMetrics());
+			return this;
+		}
+
+		public Builder strokeWidthDp(@Dimension float width) {
+			this.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, this.context.getResources().getDisplayMetrics());
+			return this;
+		}
+
+		public Builder strokeColor(@ColorInt int color) {
+			this.strokeColor = color;
+			return this;
+		}
+
+
+		/*  RESOURCE VALUES  */
+
+		public Builder cornerRadius(@DimenRes int cornerRadiusRes) {
+			this.cornerRadius = this.context.getResources().getDimension(cornerRadiusRes);
+			return this;
+		}
+
+		public Builder strokeWidth(@DimenRes int strokeWidthRes) {
+			this.strokeWidth = this.context.getResources().getDimension(strokeWidthRes);
+			return this;
+		}
+
+		public Builder strokeColorRes(@ColorRes int strokeColorRes) {
+			this.strokeColor = ContextCompat.getColor(this.context, strokeColorRes);
+			return this;
+		}
+
+
+		/*  BUILD  */
+
+		public LinearGradientDrawable build() {
+			LinearGradientDrawable gradient = new LinearGradientDrawable(this.start, this.end, this.stops);
+
+			gradient.setStrokeColor(this.strokeColor);
+			gradient.setStrokeWidth(this.strokeWidth);
+			gradient.setCornerRadius(this.cornerRadius);
+
+			return gradient;
+		}
 	}
 }

@@ -2,17 +2,14 @@ package io.supernova.toolkit.example;
 
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 import io.supernova.supernovauitoolkit.R;
-import io.supernova.uitoolkit.drawable.GradientStop;
 import io.supernova.uitoolkit.drawable.LinearGradientDrawable;
 import io.supernova.uitoolkit.text.LetterSpacingSpan;
 import io.supernova.uitoolkit.text.LineHeightSpan;
@@ -83,26 +80,26 @@ public class MainActivity extends AppCompatActivity {
 
 	private void setupGradient() {
 
-		// Create GradientStop array defining colors their position
-		// GradientStop position must be between 0 and 1
-		GradientStop[] stops = {
-				new GradientStop(0, Color.BLUE),
-				new GradientStop(0.3f, Color.BLACK),
-				new GradientStop(0.6f, Color.WHITE),
-				new GradientStop(1, Color.RED)
-		};
+		// Create gradient and pass it as the background to the view
+		//
+		// LinearGradientDrawable.Builder requires context to convert resource references and DP dimensions to pixels and
+		// start and end points that define the gradient orientation.
+		this.gradientView.setBackground(new LinearGradientDrawable.Builder(this, new PointF(0, 0), new PointF(1, 1))
+				// Stops
+				.addStop(0, Color.BLUE)
+				.addStop(0.3f, Color.BLACK)
+				.addStop(0.6f, Color.WHITE)
+				.addStopWithResource(1, R.color.colorPrimaryDark)
 
-		// Create LinearGradientDrawable with the stops, define gradient angle with 2 points
-		LinearGradientDrawable linearGradientDrawable = new LinearGradientDrawable(new PointF(0, 0), new PointF(1, 1), stops);
+				// Corner radius resource
+				.cornerRadius(R.dimen.test_gradient_corner_radius)
 
-		// Set gradient corner radius in DPs
-		linearGradientDrawable.setCornerRadius(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, this.getResources().getDisplayMetrics()));
+				// Stroke width converted from DPs
+				.strokeWidthDp(2)
 
-		// Set gradient stroke
-		linearGradientDrawable.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, this.getResources().getDisplayMetrics()));
-		linearGradientDrawable.setStrokeColor(Color.BLACK);
+				// Stroke color resource
+				.strokeColorRes(R.color.colorPrimary)
 
-		// Pass gradient to the view
-		this.gradientView.setBackground(linearGradientDrawable);
+				.build());
 	}
 }
