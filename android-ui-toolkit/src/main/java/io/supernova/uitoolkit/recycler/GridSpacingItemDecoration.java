@@ -30,8 +30,8 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 	 *
 	 * @param spacing - space between items in RecyclerView
 	 */
-	public GridSpacingItemDecoration(int spacing) {
-		this.spacing = spacing;
+	public GridSpacingItemDecoration(float spacing) {
+		this.spacing = Math.round(spacing);
 	}
 
 
