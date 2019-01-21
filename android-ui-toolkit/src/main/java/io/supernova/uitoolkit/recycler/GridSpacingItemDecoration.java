@@ -57,7 +57,7 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
 	private void getItemOffsetVertical(Rect outRect, RecyclerView parent, View child) {
 
-		int parentSize = parent.getWidth();
+		int parentSize = parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
 		GridLayoutManager manager = ((GridLayoutManager) parent.getLayoutManager());
 		GridLayoutManager.LayoutParams layoutParams = ((GridLayoutManager.LayoutParams) child.getLayoutParams());
 		int childAdapterPosition = parent.getChildAdapterPosition(child);
@@ -65,18 +65,28 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 		List<Pair<Integer, Integer>> calculatedSpacings = this.getCalculatedSpacings(parentSize, manager.getSpanCount());
 		Pair<Integer, Integer> spacing = calculatedSpacings.get(layoutParams.getSpanIndex());
 
-		if (childAdapterPosition < manager.getSpanCount()) {
-			// Apply horizontal spacing only to the first row
-			outRect.set(spacing.first, 0, spacing.second, 0);
+		// Assign left spacing
+		outRect.left = spacing.first;
+
+		// Find the end span of this item
+		if (layoutParams.getSpanSize() > 1) {
+			// This item is larger than 1 span, find the spacing for the last span this view occupies
+			Pair<Integer, Integer> trailingSpacing = calculatedSpacings.get(layoutParams.getSpanIndex() + layoutParams.getSpanSize() - 1);
+			outRect.right = trailingSpacing.second;
 		} else {
+			// This item has span size 1, assign right spacing from the same container
+			outRect.right = spacing.second;
+		}
+
+		if (childAdapterPosition >= manager.getSpanCount()) {
 			// Add vertical spacing in addition to horizontal spacings
-			outRect.set(spacing.first, this.spacing, spacing.second, 0);
+			outRect.top = this.spacing;
 		}
 	}
 
 	private void getItemOffsetHorizontal(Rect outRect, RecyclerView parent, View child) {
 
-		int parentSize = parent.getHeight();
+		int parentSize = parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBottom();
 		GridLayoutManager manager = ((GridLayoutManager) parent.getLayoutManager());
 		GridLayoutManager.LayoutParams layoutParams = ((GridLayoutManager.LayoutParams) child.getLayoutParams());
 		int childAdapterPosition = parent.getChildAdapterPosition(child);
@@ -84,12 +94,22 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 		List<Pair<Integer, Integer>> calculatedSpacings = this.getCalculatedSpacings(parentSize, manager.getSpanCount());
 		Pair<Integer, Integer> spacing = calculatedSpacings.get(layoutParams.getSpanIndex());
 
-		if (childAdapterPosition < manager.getSpanCount()) {
-			// Apply vertical spacing only to the first column
-			outRect.set(0, spacing.first, 0, spacing.second);
+		// Assign left spacing
+		outRect.top = spacing.first;
+
+		// Find the end span of this item
+		if (layoutParams.getSpanSize() > 1) {
+			// This item is larger than 1 span, find the spacing for the last span this view occupies
+			Pair<Integer, Integer> trailingSpacing = calculatedSpacings.get(layoutParams.getSpanIndex() + layoutParams.getSpanSize() - 1);
+			outRect.bottom = trailingSpacing.second;
 		} else {
+			// This item has span size 1, assign right spacing from the same container
+			outRect.bottom = spacing.second;
+		}
+
+		if (childAdapterPosition >= manager.getSpanCount()) {
 			// Add horizontal spacing in addition to vertical spacings
-			outRect.set(this.spacing, spacing.first, 0, spacing.second);;
+			outRect.left = this.spacing;
 		}
 	}
 

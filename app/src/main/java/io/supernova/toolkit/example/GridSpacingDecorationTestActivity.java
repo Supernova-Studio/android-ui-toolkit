@@ -23,7 +23,18 @@ public class GridSpacingDecorationTestActivity extends AppCompatActivity {
 	}
 
 	private void initRecyclerView() {
-		this.recyclerView.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.HORIZONTAL, false));
+		GridLayoutManager manager = new GridLayoutManager(this, 5, GridLayoutManager.HORIZONTAL, false);
+		manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+			@Override
+			public int getSpanSize(int position) {
+				if (position == 8 || position == 14) {
+					return 2;
+				} else {
+					return 1;
+				}
+			}
+		});
+		this.recyclerView.setLayoutManager(manager);
 		this.recyclerView.setAdapter(new GridSpacingDecorationTestAdapter());
 		this.recyclerView.addItemDecoration(new GridSpacingItemDecoration((int) this.getResources().getDimension(R.dimen.test_recycler_view_spacing)));
 	}
