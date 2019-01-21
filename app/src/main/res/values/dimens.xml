@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<dimen name="test_gradient_corner_radius">8dp</dimen>
+
+	<dimen name="test_recycler_view_spacing">16dp</dimen>
 </resources>
