@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import io.supernova.supernovauitoolkit.R;
 import io.supernova.uitoolkit.drawable.LinearGradientDrawable;
+import io.supernova.uitoolkit.text.FontSpan;
 import io.supernova.uitoolkit.text.LetterSpacingSpan;
 import io.supernova.uitoolkit.text.LineHeightSpan;
 import io.supernova.uitoolkit.text.RelativeLineHeightSpan;
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
 		// Setup shrink letter spacing span
 		LetterSpacingSpan shrinkingSpan = new LetterSpacingSpan(-0.1f);
 		spannableString.setSpan(shrinkingSpan, 30, spannableString.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+		FontSpan span = new FontSpan(this.getResources().getFont(R.font.font_lato_black));
+		spannableString.setSpan(span, 5, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		// Pass spannable text to the view
 		this.exampleTextView2.setText(spannableString);

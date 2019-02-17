@@ -14,14 +14,14 @@
 
 		<activity android:name="io.supernova.toolkit.example.MainActivity">
 
-		</activity>
-
-		<activity android:name="io.supernova.toolkit.example.GridSpacingDecorationTestActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
+		</activity>
+
+		<activity android:name="io.supernova.toolkit.example.GridSpacingDecorationTestActivity">
 		</activity>
 	</application>
 
