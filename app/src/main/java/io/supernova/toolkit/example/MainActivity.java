@@ -3,6 +3,8 @@ package io.supernova.toolkit.example;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 		LetterSpacingSpan shrinkingSpan = new LetterSpacingSpan(-0.1f);
 		spannableString.setSpan(shrinkingSpan, 30, spannableString.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-		FontSpan span = new FontSpan(this.getResources().getFont(R.font.font_lato_black));
+		FontSpan span = new FontSpan(ResourcesCompat.getFont(this, R.font.font_lato_light));
 		spannableString.setSpan(span, 5, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		// Pass spannable text to the view
