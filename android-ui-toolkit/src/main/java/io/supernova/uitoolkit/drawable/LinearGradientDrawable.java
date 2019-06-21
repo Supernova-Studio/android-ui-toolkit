@@ -113,7 +113,7 @@ public class LinearGradientDrawable extends Drawable {
 		outline.setRoundRect(this.getBounds(), this.cornerRadius);
 
 		// Outline accepts range 0f - 1f, while drawable alpha is 0 - 255
-		outline.setAlpha(this.getAlpha() / 255);
+		outline.setAlpha(this.getAlpha() / 255f);
 	}
 
 
@@ -130,16 +130,30 @@ public class LinearGradientDrawable extends Drawable {
 
 	public void setCornerRadius(float cornerRadius) {
 		this.cornerRadius = cornerRadius;
+		invalidateSelf();
+	}
+
+
+	public float getStrokeWidth() {
+		return this.strokePaint.getStrokeWidth();
 	}
 
 
 	public void setStrokeWidth(float width) {
 		this.strokePaint.setStrokeWidth(width);
+		invalidateSelf();
+	}
+
+
+	@ColorInt
+	public int getStrokeColor() {
+		return this.strokePaint.getColor();
 	}
 
 
 	public void setStrokeColor(@ColorInt int color) {
 		this.strokePaint.setColor(color);
+		invalidateSelf();
 	}
 
 
@@ -156,6 +170,8 @@ public class LinearGradientDrawable extends Drawable {
 		} else {
 			this.setLinearGradientShaderPaint();
 		}
+
+		invalidateSelf();
 	}
 
 
